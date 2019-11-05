@@ -1,0 +1,29 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.PigCollection>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	Layout = null;
+}
+
+
+<html>
+    <head></head>
+   
+    
+
+@{
+	var selection = Umbraco.Content(Guid.Parse("a54a77a1-cd57-4dec-a3ed-7c72e0fcec12"))
+    .ChildrenOfType("pig")
+    .Where(x => x.IsVisible())
+    .OrderBy(x => x.Name);
+}
+<ul>
+	@foreach (var item in selection)
+	{
+		<li>
+			<a href="@item.Url">@item.Name</a>
+		</li>
+	}
+</ul>
+
+</html>
+

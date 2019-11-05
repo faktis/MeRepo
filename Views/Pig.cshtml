@@ -1,0 +1,8 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Pig>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	Layout = "pigCollection.cshtml";
+}
+
+@Model.Value("price", fallback: Fallback.ToAncestors)
+@Model.Value("productName", fallback: Fallback.ToAncestors)
