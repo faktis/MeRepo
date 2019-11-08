@@ -25,8 +25,8 @@
     .Where(x => x.IsVisible()); 
 		<li>
 			<a href="@item.Url">@item.Name</a>
-			
-			<button onClick=addToCart("@item.Name","@item.Value("Price")")>Buy</button>
+       
+			<button onClick=addToCart("@item.Name","@item.Value("Price")","@item.Value("Color")","@item.Value("weight")","@item.Value("DiscountAmount")")>BUY</button>
 		</li>
 	}
 </ul>
