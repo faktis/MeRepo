@@ -8,6 +8,7 @@
 <html>
     <head>
         <script src="/scripts/ShopingCart.js"></script>
+		<script src="/scripts/Cart.js"></script>
     </head>
    
     <button onClick=max()></button>
@@ -19,10 +20,21 @@
     .OrderBy(x => x.Name);
 }
 <ul>
+	
 	@foreach (var item in selection)
 	{
+		var productArr = Umbraco.Content(Guid.Parse("ad4ee668-b0c1-403a-9244-37164b9f6b27"))
+    .ChildrenOfType("pig")
+    .Where(x => (x.Id == item.Id))
+    .Where(x => x.IsVisible());
+
+		var product = item.Name; //productArr.First();
+
+
 		<li>
 			<a href="@item.Url">@item.Name</a>
+			
+			<button onClick=addToCart("@product")>Buy</button>
 		</li>
 	}
 </ul>
