@@ -34,10 +34,31 @@ function addToCart(product)
             products: [],
             shipping: 100,
             totalPrice: 0
-        };   
+        };  
         store.save(); 
     }
     console.log({product});
     store.cart.products.push(product);
     store.save();
+    
+    localStorage.setItem("cart", store.cart.products) 
+}
+function Clear()
+{
+  localStorage.clear();
+  console.log("empty LS")
+}
+function GetData()
+{
+    let storedNames = localStorage.getItem("cart");
+  //  getObj("SoldItems")
+  console.log(storedNames);
+  WriteProducts(storedNames)
+}
+
+function WriteProducts(products)
+{
+    let Text="";
+  Text += products + "<br>";
+    document.getElementById("Products").innerHTML=Text;
 }

@@ -11,10 +11,6 @@ var product10 = {Name:"Hook Shoot", amount: 0 , color:"Blue", Size:"Medium", Pri
 var products = [product1, product2, product3, product4, product5, product6, product7, product8, product9, product10];
 var SoldProducts = [];
 var cart;
-function max()
-{
-    console.log("Suck a dick dumb shit");
-}
 function ObjectThing()
 {
 Storage.prototype.setObj = function(key, obj) {

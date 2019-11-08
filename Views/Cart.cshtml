@@ -3,3 +3,18 @@
 @{
 	Layout = "master.cshtml";
 }
+
+		<html>
+    <head>
+        <script src="/scripts/ShopingCart.js"></script>
+		<script src="/scripts/Cart.js"></script>
+    </head>
+<body onLoad=GetData()>
+    <p>Your Purchase List</p>
+    <div id="Products"></div>
+    <button onClick="Clear()">Delete all items</button>
+</body>
+	
+
+</html>
+
