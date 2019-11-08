@@ -25,8 +25,15 @@ store.save = function(){
   
   console.log(store.admin)
 let product = [];
-function addToCart(product)
+function addToCart(name, price, color, weight, discount)
 {
+  let product = {
+    Name: name,
+    Price: price,
+    Color: color,
+    Weight: weight,
+    Discount: discount
+  };
     if(!store.cart){
 
         console.log('Creating Cart');
@@ -41,7 +48,7 @@ function addToCart(product)
     store.cart.products.push(product);
     store.save();
     
-    localStorage.setItem("cart", store.cart.products) 
+    localStorage.setItem("products", JSON.stringify(store.cart.products)) 
 }
 function Clear()
 {
@@ -50,9 +57,10 @@ function Clear()
 }
 function GetData()
 {
-    let storedNames = localStorage.getItem("cart");
-  //  getObj("SoldItems")
-  console.log(storedNames);
+    let storedNames = localStorage.getItem("products");
+  storedNames = JSON.parse(storedNames);
+  console.log('From LS ', storedNames);
+  
   WriteProducts(storedNames)
 }
 
@@ -61,7 +69,10 @@ function WriteProducts(products)
   if(products!=null)
   {
     let Text="";
-  Text += products + "<br>";
+    products.forEach(function(element) {
+      console.log(element);
+      Text += "Name: " +element.Name + "Price: " +element.Price +"<br>";
+    });
     document.getElementById("Products").innerHTML=Text;
   }
   else

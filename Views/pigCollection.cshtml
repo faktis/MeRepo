@@ -7,7 +7,6 @@
 
 <html>
     <head>
-        <script src="/scripts/ShopingCart.js"></script>
 		<script src="/scripts/Cart.js"></script>
     </head>
 @{
@@ -23,15 +22,11 @@
 		var productArr = Umbraco.Content(Guid.Parse("ad4ee668-b0c1-403a-9244-37164b9f6b27"))
     .ChildrenOfType("pig")
     .Where(x => (x.Id == item.Id))
-    .Where(x => x.IsVisible());
-
-		var product = item.Name; //productArr.First();
-
-
+    .Where(x => x.IsVisible()); 
 		<li>
 			<a href="@item.Url">@item.Name</a>
 			
-			<button onClick=addToCart("@item.Name")>Buy</button>
+			<button onClick=addToCart("@item.Name","@item.Value("Price")")>Buy</button>
 		</li>
 	}
 </ul>
