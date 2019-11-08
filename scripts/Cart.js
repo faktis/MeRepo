@@ -58,7 +58,14 @@ function GetData()
 
 function WriteProducts(products)
 {
+  if(products!=null)
+  {
     let Text="";
   Text += products + "<br>";
     document.getElementById("Products").innerHTML=Text;
+  }
+  else
+  {
+    document.getElementById("Products").innerHTML="Go buy some pigs!";
+  }
 }
