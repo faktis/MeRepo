@@ -71,7 +71,9 @@ function WriteProducts(products)
     let Text="";
     products.forEach(function(element) {
       console.log(element);
-      Text += "Name: " +element.Name + "Price: " +element.Price +"<br>";
+      Text += "<br><br>Name: " +element.Name + " Price: " +element.Price +
+      " Discount: "+element.Discount+ " Color: " + element.Color +" Weight:" +element.Weight
+      "<br><br>";
     });
     document.getElementById("Products").innerHTML=Text;
   }
