@@ -82,18 +82,9 @@ function SeparateTheDifferentItems(products)
 
 function CheckIfDiscountAmountFulfilled(products)
 {
-  //let allreadyChecked = [];
   let differentItems = SeparateTheDifferentItems(products);
-  const discountedItems = [];
-  // products.forEach(function(element)
-  // {
-  //   if(!allreadyChecked.includes(element.Name))
-  //   {
-  //     differentItems.push(products.filter(item => item.Name.includes(element.Name)))
-  //     allreadyChecked.push(element.Name)
-     
-  //   }
-  // })
+  let discountedItems = [];
+
   differentItems.forEach(function(element)
   {
     if(Number(element[0].Discount)!==0)
@@ -131,16 +122,46 @@ function WriteProducts(products, discountedItems)
     
     });*/
     differentItems.forEach(function(element){
-      Text += "<br><br>Name: " +element[0].Name + " Price: " +element[0].Price +
-      " Discount: "+element[0].Discount+ " Color: " + element[0].Color +" Weight:" +element[0].Weight + " Amount: " + element.length;
+      Text += 
+      "<div class=\"container float-left\">" + 
+        "<div class=\"row mb-1 bg-dark text-light\">" + 
+          "<div class=\"col-sm-4 col-xs-1 col-md-3\">Name: " + element[0].Name + "<\/div>" + 
+          "<div class=\"col-sm-3 col-xs-1 col-md-3\">Price Per Product: " + element[0].Price + "<\/div>" + 
+          "<div class=\"col-sm-2 col-xs-1 col-md-2\"> Amount: " + element.length + "<\/div>" + 
+          "<div class=\"col-sm-3 col-xs-1 col-md-3\"> Sum added to total: " + element.length * element[0].Price + "<\/div>" +
+        "<\/div>" + 
+      "<\/div>";
       TotalPrice += (Number(element[0].Price)*element.length)
     })
-    
-    discountedItems.forEach(function(element){
-      TotalPrice -= Number(element.Price);
-      TotalDiscount += Number(element.Price);
+    console.log(TotalPrice)
+    let RemovedFromTotalPrice = SeparateTheDifferentItems(discountedItems);
+
+    RemovedFromTotalPrice.forEach(function(element){
+      TotalPrice -= Number(element[0].Price)*element.length;
+      TotalDiscount += Number(element[0].Price)*element.length;
+      Text +=  
+      "<div class=\"container float-left\">" + "Discounted wares" +
+        "<div class=\"row mb-1 bg-danger text-light\">" + 
+          "<div class=\"col-sm-4 col-xs-1 col-md-3\">Name: " + element[0].Name + "<\/div>" + 
+          "<div class=\"col-sm-3 col-xs-1 col-md-3\">Price Per Product: " + element[0].Price + "<\/div>" + 
+          "<div class=\"col-sm-2 col-xs-1 col-md-2\"> Amount: " + element.length + "<\/div>" + 
+          "<div class=\"col-sm-3 col-xs-1 col-md-3\"> Sum removed from total: " + element.length * element[0].Price + "<\/div>" +
+        "<\/div>" + 
+      "<\/div>";
     })
-    Text += "<br><br>Total: " +TotalPrice +"<br>Discount: " +TotalDiscount ;
+    Text += 
+    "<div class=\"container float-left\">" + "Summation" +
+      "<div class=\"row mb-1 bg-info text-light\">" + 
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Total: " +TotalPrice + "<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Discount: " +TotalDiscount + "<\/div>" +
+      "<\/div>" + 
+    "<\/div>";
+    Text +=
+    "<div class=\"container float-left\">" +
+      "<div class=\"row mb-1 bg-white text-light\">" + 
+        "<button type=\"button\" class=\"btn btn-primary\" onClick=\"Clear()\">Delete all items</button>" +
+      "<\/div>" + 
+    "<\/div>";
     document.getElementById("Products").innerHTML=Text;
   }
   else
