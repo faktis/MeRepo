@@ -23,8 +23,10 @@
     .Where(x => (x.Id == item.Id))
     .Where(x => x.IsVisible()); 
 		<li>
-			<a href="@item.Url">@item.Name</a>
-       
+			<div id="ProductName"><a href="@item.Url">@item.Name</a></div>
+			<div id="ProductPrice">Price: @item.Value("Price")</div>
+			<div id="ProductDiscountAmount"></div>
+			
 			<button onClick=addToCart("@item.Name","@item.Value("Price")","@item.Value("Color")","@item.Value("weight")","@item.Value("DiscountAmount")")>BUY</button>
 		</li>
 	}
