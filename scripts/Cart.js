@@ -64,13 +64,10 @@ function GetData()
   WriteProducts(storedNames, CheckIfDiscountAmountFulfilled(storedNames))
 }
 
-
-
-function CheckIfDiscountAmountFulfilled(products)
+function SeparateTheDifferentItems(products)
 {
   let allreadyChecked = [];
   let differentItems = [];
-  const discountedItems = [];
   products.forEach(function(element)
   {
     if(!allreadyChecked.includes(element.Name))
@@ -80,6 +77,23 @@ function CheckIfDiscountAmountFulfilled(products)
      
     }
   })
+  return differentItems;
+}
+
+function CheckIfDiscountAmountFulfilled(products)
+{
+  //let allreadyChecked = [];
+  let differentItems = SeparateTheDifferentItems(products);
+  const discountedItems = [];
+  // products.forEach(function(element)
+  // {
+  //   if(!allreadyChecked.includes(element.Name))
+  //   {
+  //     differentItems.push(products.filter(item => item.Name.includes(element.Name)))
+  //     allreadyChecked.push(element.Name)
+     
+  //   }
+  // })
   differentItems.forEach(function(element)
   {
     if(Number(element[0].Discount)!==0)
@@ -104,7 +118,8 @@ function WriteProducts(products, discountedItems)
     let TotalPrice = 0;
     let thisCount = 0;
     let TotalDiscount = 0;
-    products.forEach(function(element) {
+    let differentItems = SeparateTheDifferentItems(products);
+    /*products.forEach(function(element) {
       
       Text += "<br><br>Name: " +element.Name + " Price: " +element.Price +
       " Discount: "+element.Discount+ " Color: " + element.Color +" Weight:" +element.Weight
@@ -112,23 +127,15 @@ function WriteProducts(products, discountedItems)
 
     // Discount Calculation
     TotalPrice += Number(element.Price);
-    /*if(element.Discount === 10)
-    {
-      thisCount++;
-      if(thisCount == 3)
-      {
-        thisCount =0;
-        TotalPrice -= Number(element.Price); // Buy 3 Get 1 free
-        TotalDiscount += Number(element.Price);
-      }
-    }
-    else
-    {
-      console.log("NoDISC")
-      
-    }*/
+   
     
-    });
+    });*/
+    differentItems.forEach(function(element){
+      Text += "<br><br>Name: " +element[0].Name + " Price: " +element[0].Price +
+      " Discount: "+element[0].Discount+ " Color: " + element[0].Color +" Weight:" +element[0].Weight + " Amount: " + element.length;
+      TotalPrice += (Number(element[0].Price)*element.length)
+    })
+    
     discountedItems.forEach(function(element){
       TotalPrice -= Number(element.Price);
       TotalDiscount += Number(element.Price);
