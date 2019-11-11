@@ -17,7 +17,7 @@
 }
 <ul style="list-style-type:none;">
 	
-	<div class="container">
+	<div class="container float-left">
 		<div class="row">
 	@foreach (var item in selection)
 	{
@@ -32,7 +32,16 @@
 			<div  id="IMAGE">
 			<img src ="@item.Value("imageUrl")" class ="img-fluid">	
 			</div>
+			<div>
 			<button onClick=addToCart("@item.Name","@item.Value("Price")","@item.Value("Color")","@item.Value("weight")","@item.Value("DiscountAmount")")>BUY</button>
+				@{
+					
+				if( (int)item.Value("DiscountAmount") > 0)
+				{
+				<p>Buy @item.Value("DiscountAmount") pay for @((int)@item.Value("DiscountAmount")-1)</p>
+				}
+				}
+				</div>
 		</li>
 	}
 		</div>

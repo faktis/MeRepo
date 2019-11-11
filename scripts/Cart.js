@@ -27,6 +27,7 @@ store.save = function(){
 let product = [];
 function addToCart(name, price, color, weight, discount)
 {
+  console.log(name);
   let product = {
     Name: name,
     Price: price,
