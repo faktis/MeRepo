@@ -60,8 +60,14 @@ function GetData()
     let storedNames = localStorage.getItem("products");
   storedNames = JSON.parse(storedNames);
   console.log('From LS ', storedNames);
-  
-  WriteProducts(storedNames, CheckIfDiscountAmountFulfilled(storedNames))
+  if(storedNames!=null)
+  {
+    WriteProducts(storedNames, CheckIfDiscountAmountFulfilled(storedNames))
+  }
+  else{
+
+    document.getElementById("Products").innerHTML="Go buy some pigs!";
+  }
 }
 
 function SeparateTheDifferentItems(products)
@@ -163,9 +169,5 @@ function WriteProducts(products, discountedItems)
       "<\/div>" + 
     "<\/div>";
     document.getElementById("Products").innerHTML=Text;
-  }
-  else
-  {
-    document.getElementById("Products").innerHTML="Go buy some pigs!";
   }
 }
