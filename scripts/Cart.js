@@ -95,7 +95,7 @@ function CheckIfDiscountAmountFulfilled(products)
   {
     if(Number(element[0].Discount)!==0)
     {
-    let numbersOfDiscountedItems = element.length/Number(element[0].Discount)
+    let numbersOfDiscountedItems = parseInt(element.length/Number(element[0].Discount))
     for(let i = 0; i < numbersOfDiscountedItems; i++)
     {
       discountedItems.push(element[0])
