@@ -89,10 +89,12 @@ function CheckIfDiscountAmountFulfilled(products)
   {
     if(Number(element[0].Discount)!==0)
     {
-    let numbersOfDiscountedItems = element.length/Number(element[0].Discount)
-    for(let i = 0; i < numbersOfDiscountedItems; i++)
+    let numbersOfDiscountedItems = parseInt(element.length/Number(element[0].Discount))
+    for(let i = 1; i < numbersOfDiscountedItems+1; i++)
     {
-      discountedItems.push(element[0])
+      
+        discountedItems.push(element[0])
+      
     }
   }
   })
@@ -110,17 +112,7 @@ function WriteProducts(products, discountedItems)
     let thisCount = 0;
     let TotalDiscount = 0;
     let differentItems = SeparateTheDifferentItems(products);
-    /*products.forEach(function(element) {
-      
-      Text += "<br><br>Name: " +element.Name + " Price: " +element.Price +
-      " Discount: "+element.Discount+ " Color: " + element.Color +" Weight:" +element.Weight
-      "<br><br>";
 
-    // Discount Calculation
-    TotalPrice += Number(element.Price);
-   
-    
-    });*/
     differentItems.forEach(function(element){
       Text += 
       "<div class=\"container float-left\">" + 
