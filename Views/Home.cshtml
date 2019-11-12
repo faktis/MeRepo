@@ -11,13 +11,14 @@
     .Where(x => (x.Name == "BigBertha"))
     .Where(x => x.IsVisible());
 }
+<div class="container float-left">
 <div id=info>
 	<p> Welcome to Swine House! We offer the best seleciton of fine breed pigs on the market
 	<br> This month we have a special offer on some of our popular products, Buy 3 and get 1 free!!!!
 	<br> Coustomers will also recive free Shipment when buying products for more then 6000$ 
 	</p>
 </div>
-<div class="container float-left">
+
 		<div class="row">
 <div class="col-sm-4 col-xs-1 col-md-3">
 	@foreach (var item in selection)
