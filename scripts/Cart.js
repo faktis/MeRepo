@@ -116,7 +116,8 @@ function WriteProducts(products, discountedItems)
   {
     let Text="";
     let TotalPrice = 0;
-    let thisCount = 0;
+    let TotalTax = 0;
+    let Shipment = 1000;
     let TotalDiscount = 0;
     let differentItems = SeparateTheDifferentItems(products);
    
@@ -138,6 +139,12 @@ function WriteProducts(products, discountedItems)
     RemovedFromTotalPrice.forEach(function(element){
       TotalPrice -= Number(element[0].Price)*element.length;
       TotalDiscount += Number(element[0].Price)*element.length;
+      TotalTax = TotalPrice/25;
+      if(TotalPrice>6000)
+      {
+        Shipment = 0;
+      }
+      TotalPrice += Shipment;
       Text +=  
       "<div class=\"container float-left\">" + "Discounted wares" +
         "<div class=\"row mb-1 bg-danger text-light\">" + 
@@ -151,8 +158,10 @@ function WriteProducts(products, discountedItems)
     Text += 
     "<div class=\"container float-left\">" + "Summation" +
       "<div class=\"row mb-1 bg-info text-light\">" + 
-        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Total: " +TotalPrice + "<\/div>" +
         "<div class=\"col-sm-4 col-xs-1 col-md-3\">Discount: " +TotalDiscount + "<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Tax: " +TotalTax + "<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Shipment: " +Shipment + "<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Total: " +TotalPrice + "<\/div>" +
       "<\/div>" + 
     "<\/div>";
     Text +=
@@ -161,6 +170,8 @@ function WriteProducts(products, discountedItems)
         "<button type=\"button\" class=\"btn btn-primary\" onClick=\"Clear()\">Buy All items</button>" +
       "<\/div>" + 
     "<\/div>";
+    
+    console.log(TotalTax);
     document.getElementById("Products").innerHTML=Text;
   }
 }
