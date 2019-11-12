@@ -54,7 +54,9 @@ function addToCart(name, price, color, weight, discount)
 function Clear()
 {
   localStorage.clear();
-  console.log("empty LS")
+  alert("Thank You for your purchase!")
+        localStorage.clear();
+        window.location.href = '';
 }
 function GetData()
 {
@@ -117,17 +119,7 @@ function WriteProducts(products, discountedItems)
     let thisCount = 0;
     let TotalDiscount = 0;
     let differentItems = SeparateTheDifferentItems(products);
-    /*products.forEach(function(element) {
-      
-      Text += "<br><br>Name: " +element.Name + " Price: " +element.Price +
-      " Discount: "+element.Discount+ " Color: " + element.Color +" Weight:" +element.Weight
-      "<br><br>";
-
-    // Discount Calculation
-    TotalPrice += Number(element.Price);
    
-    
-    });*/
     differentItems.forEach(function(element){
       Text += 
       "<div class=\"container float-left\">" + 
@@ -166,7 +158,7 @@ function WriteProducts(products, discountedItems)
     Text +=
     "<div class=\"container float-left\">" +
       "<div class=\"row mb-1 bg-white text-light\">" + 
-        "<button type=\"button\" class=\"btn btn-primary\" onClick=\"Clear()\">Delete all items</button>" +
+        "<button type=\"button\" class=\"btn btn-primary\" onClick=\"Clear()\">Buy All items</button>" +
       "<\/div>" + 
     "<\/div>";
     document.getElementById("Products").innerHTML=Text;
