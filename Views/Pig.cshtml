@@ -4,5 +4,26 @@
 	Layout = "master.cshtml";
 }
 
-@Model.Value("price", fallback: Fallback.ToAncestors)
-@Model.Value("productName", fallback: Fallback.ToAncestors)
+<div class="container float-left">
+<div class="col-12">
+	
+	<div class="row mb-1 bg-dark text-light">
+          <div class="col-sm-4 col-xs-1 col-md-3">Name: @Model.Name </div>
+          <div class="col-sm-3 col-xs-1 col-md-3">Price: @Model.Value("Price")</div>  
+	</div>
+	<button onClick=addToCart("@Model.Name","@Model.Value("Price")","@Model.Value("Color")","@Model.Value("weight")","@Model.Value("DiscountAmount")")>BUY</button>
+		@{
+			
+		if( (int)Model.Value("DiscountAmount") > 0)
+		{
+		<p>Buy @Model.Value("DiscountAmount") pay for @((int)@Model.Value("DiscountAmount")-1)</p>
+		}
+		}
+	<div  id="IMAGE">
+	<img src ="@Model.Value("imageUrl")" class ="img-fluid">	
+	</div>
+	<div>
+	
+	</div>
+	</div>
+</div>

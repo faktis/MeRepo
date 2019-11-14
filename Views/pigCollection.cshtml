@@ -7,7 +7,7 @@
 
 <html>
     <head>
-		<script src="/scripts/Cart.js"></script>
+		
     </head>
 @{
 	var selection = Umbraco.Content(Guid.Parse("ad4ee668-b0c1-403a-9244-37164b9f6b27"))
@@ -18,30 +18,31 @@
 <ul style="list-style-type:none;">
 	
 	<div class="container float-left">
-		<div class="row">
+		<div class="row" >
 	@foreach (var item in selection)
 	{
 		var productArr = Umbraco.Content(Guid.Parse("ad4ee668-b0c1-403a-9244-37164b9f6b27"))
     .ChildrenOfType("pig")
     .Where(x => (x.Id == item.Id))
     .Where(x => x.IsVisible()); 
-		<li class="col-sm-4 col-xs-1 col-md-3">
-			<div  id="ProductName"><a href="@item.Url">@item.Name</a></div>
-			<div  id="ProductPrice">Price: @item.Value("Price")</div>
-			<div  id="ProductDiscountAmount"></div>
-			<div  id="IMAGE">
-			<img src ="@item.Value("imageUrl")" class ="img-fluid">	
-			</div>
-			<div>
-			<button onClick=addToCart("@item.Name","@item.Value("Price")","@item.Value("Color")","@item.Value("weight")","@item.Value("DiscountAmount")")>BUY</button>
-				@{
+		<li class="card col-sm-4 col-xs-1 col-md-4">
+			
+				<img class="card-img-top" src="@item.Value("imageUrl")" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text"><h3><a href="@item.Url">@item.Name</a></h3> 
+					<button onClick=addToCart("@item.Name","@item.Value("Price")","@item.Value("Color")","@item.Value("weight")","@item.Value("DiscountAmount")")>Add to cart</button></p>
+					<p> Price: @item.Value("Price")</p>
 					
-				if( (int)item.Value("DiscountAmount") > 0)
-				{
-				<p>Buy @item.Value("DiscountAmount") pay for @((int)@item.Value("DiscountAmount")-1)</p>
-				}
-				}
+					
+					@{
+						if( (int)item.Value("DiscountAmount") > 0)
+						{
+							<p>Buy @item.Value("DiscountAmount") pay for @((int)@item.Value("DiscountAmount")-1)</p>
+						}
+					}
 				</div>
+			
+			
 		</li>
 	}
 		</div>

@@ -23,7 +23,7 @@ store.save = function(){
 
   
   
-  console.log(store.admin)
+
 let product = [];
 function addToCart(name, price, color, weight, discount)
 {
@@ -158,9 +158,10 @@ function WriteProducts(products, discountedItems)
     Text += 
     "<div class=\"container float-left\">" + "Summation" +
       "<div class=\"row mb-1 bg-info text-light\">" + 
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Products: " +(Number(TotalPrice) + Number(TotalDiscount) - Number(TotalTax)) + "<\/div>" +
         "<div class=\"col-sm-4 col-xs-1 col-md-3\">Discount: " +TotalDiscount + "<\/div>" +
-        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Tax: " +TotalTax + "<\/div>" +
-        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Shipment: " +Shipment + "<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-2\">Tax: " +TotalTax + "<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Shipping: " +Shipment + "<\/div>" +
         "<div class=\"col-sm-4 col-xs-1 col-md-3\">Total: " +TotalPrice + "<\/div>" +
       "<\/div>" + 
     "<\/div>";
