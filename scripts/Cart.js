@@ -58,9 +58,16 @@ function Clear()
         localStorage.clear();
         window.location.href = '';
 }
+
+function ChangeCart(cartNumber)
+{
+  console.log(cartNumber)
+  document.getElementById("CartNumber").innerHTML=cartNumber
+
+}
 function GetData()
 {
-    let storedNames = localStorage.getItem("products");
+  let storedNames = localStorage.getItem("products");
   storedNames = JSON.parse(storedNames);
   console.log('From LS ', storedNames);
   if(storedNames!=null)
