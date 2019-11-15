@@ -3,7 +3,8 @@
 @using Umbraco.Web;
 
 @{ 
-   var cartNumber = "1";
+ 
+   
     var site = Model.Root();
 
      var home = (Home)site;
@@ -36,7 +37,10 @@
             
             
             @item.Name
-            @if(item.Name=="Cart"){<span id="CartNumber">1</span> }
+            @if(item.Name=="Cart"){
+              
+              <span id="CartNumber"></span> 
+              }
 
             @if(item.IsAncestorOrSelf(Model))
 
@@ -56,9 +60,9 @@
         <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">Change Cart
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li onClick="ChangeCart(1)"><a href="#">Select Cart 1</a></li>
-          <li onClick="ChangeCart(2)"><a href="#">Select Cart 2</a></li>
-          <li onClick="ChangeCart(3)"><a href="#">Select Cart 3</a></li>
+          <li onClick="ChangeCart(1) "><a href="">Select Cart 1</a></li>
+          <li onClick="ChangeCart(2) "><a href="">Select Cart 2</a></li>
+          <li onClick="ChangeCart(3) "><a href="">Select Cart 3</a></li>
         </ul>
       </li>
     

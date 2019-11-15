@@ -19,7 +19,13 @@ store.save = function(){
   localStorage.store = JSON.stringify(this);
 
 };
+if(!store.cartNumber)
+{
+  store.cartNumber = 1;
+  store.save();
+}
 
+document.getElementById("CartNumber").innerHTML=store.cartNumber
 
   
   
@@ -35,34 +41,63 @@ function addToCart(name, price, color, weight, discount)
     Weight: weight,
     Discount: discount
   };
-    if(!store.cart){
+  if(!store.cart)
+  {
+    store.cart = [];
+    store.save()
+  }
+  let cartNumber = parseInt(document.getElementById("CartNumber").innerHTML)
+    if(!store.cart[cartNumber]){
 
         console.log('Creating Cart');
-        store.cart = {
+        store.cart[cartNumber] = {
             products: [],
             shipping: 100,
             totalPrice: 0
         };  
         store.save(); 
     }
-    console.log({product});
-    store.cart.products.push(product);
+    
+    console.log(cartNumber)
+    //console.log(store.cart[parseInt(cartNumber)+2]);
+    store.cart[cartNumber].products.push(product);
     store.save();
     
-    localStorage.setItem("products", JSON.stringify(store.cart.products)) 
+    localStorage.setItem("products", JSON.stringify(store.cart[cartNumber].products)) 
 }
 function Clear()
 {
-  localStorage.clear();
+  
+  localStorage.cart[store.cartNumber].clear();
+  localStorage.products.clear();
   alert("Thank You for your purchase!")
-        localStorage.clear();
+        
         window.location.href = '';
 }
 
 function ChangeCart(cartNumber)
 {
   console.log(cartNumber)
-  document.getElementById("CartNumber").innerHTML=cartNumber
+  currCartNumber = cartNumber;
+  
+    store.cartNumber = cartNumber;
+    store.save();
+  
+ 
+  if(!store.cart[cartNumber]){
+
+    console.log('Creating Cart');
+    store.cart[cartNumber] = {
+        products: [],
+        shipping: 100,
+        totalPrice: 0
+    };  
+    store.save(); 
+    
+}
+localStorage.setItem("products", JSON.stringify(store.cart[cartNumber].products))
+
+
 
 }
 function GetData()
@@ -70,7 +105,7 @@ function GetData()
   let storedNames = localStorage.getItem("products");
   storedNames = JSON.parse(storedNames);
   console.log('From LS ', storedNames);
-  if(storedNames!=null)
+  if(storedNames!=null && storedNames.length!=0)
   {
     WriteProducts(storedNames, CheckIfDiscountAmountFulfilled(storedNames))
   }
