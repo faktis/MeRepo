@@ -8,8 +8,15 @@
     <head>
 		
     </head>
-<body onLoad=GetData()>
+<body onLoad="GetData()">
     <div class="container float-left">
+        <p>Active Cart:</p>
+        <p id="ActiveCart">None</p>
+<button id="Cart" onClick="newcart()"> New Cart</button>
+<button  onClick="getcart()"> get Cart</button>
+<button id="Cart" onClick="clear()"> clear</button>
+<div id="getCart"></div>
+<div id="DisplayCarts"></div>
     <p>Your Purchase List</p>
     
     <div id="Products"></div>

@@ -63,6 +63,7 @@ function GetData()
     let storedNames = localStorage.getItem("products");
   storedNames = JSON.parse(storedNames);
   console.log('From LS ', storedNames);
+  getcart();
   if(storedNames!=null)
   {
     WriteProducts(storedNames, CheckIfDiscountAmountFulfilled(storedNames))
@@ -71,6 +72,8 @@ function GetData()
 
     document.getElementById("Products").innerHTML="Go buy some pigs!";
   }
+
+  document.getElementById("ActiveCart").innerHTML= localStorage.getItem("ActiveCart");
 }
 
 function SeparateTheDifferentItems(products)
@@ -180,4 +183,59 @@ function WriteProducts(products, discountedItems)
     console.log(TotalTax);
     document.getElementById("Products").innerHTML=Text;
   }
+}
+
+function getcart()
+{
+let carts = localStorage.getItem("carts")
+carts = JSON.parse(carts)
+carts = carts
+console.log(carts)
+console.log("I am array "+ Array.isArray(carts))
+let text ="";
+for (var i = 0; i < carts.Name.length; i++) {
+  console.log(i + ""+ carts.Name[i])
+  text +="<p>"+ carts.Name[i] + "<button onclick=\"ChangeActiveCart('"+carts.Name[i]+"')\"> Set to Active Cart </button></p>"
+  //Do something
+}
+
+document.getElementById("getCart").innerHTML= text;
+}
+
+function ChangeActiveCart(cart)
+{
+  localStorage.setItem("ActiveCart", cart)
+  document.getElementById("ActiveCart").innerHTML= localStorage.getItem("ActiveCart");
+}
+function newcart()
+{
+
+  let Cart = {
+    Name: prompt("New cart name"),
+    Products: localStorage.getItem("products")
+  };
+   if(!store.Allcart){
+
+        console.log('Creating Cart');
+        store.Allcart = {
+            Name: [],
+            Products: []
+    }
+    
+    store.save(); 
+  }
+    store.Allcart.Name.push(Cart.Name);
+    store.Allcart.Products.push(Cart.Products);
+    store.save(); 
+
+  localStorage.setItem("carts", JSON.stringify(store.Allcart))
+  localStorage.setItem("ActiveCart", Cart.Name)
+  //console.log("Saved")
+  
+  window.location.href = '';
+    }
+
+function clear()
+{
+  localStorage.clear();
 }
