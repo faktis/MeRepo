@@ -33,7 +33,8 @@ function addToCart(name, price, color, weight, discount)
     Price: price,
     Color: color,
     Weight: weight,
-    Discount: discount
+    Discount: discount,
+    Cart: localStorage.getItem("ActiveCart")
   };
     if(!store.cart){
 
@@ -54,26 +55,52 @@ function addToCart(name, price, color, weight, discount)
 function Clear()
 {
   localStorage.clear();
-  alert("Thank You for your purchase!")
-        localStorage.clear();
-        window.location.href = '';
+  alert("Removed Carts!")
+  localStorage.clear();
+  localStorage.setItem("ActiveCart","No Cart")
+  window.location.href = '';
 }
 function GetData()
 {
     let storedNames = localStorage.getItem("products");
   storedNames = JSON.parse(storedNames);
-  console.log('From LS ', storedNames);
+  console.log('Got this from LocalStorage: ', storedNames);
+  
   getcart();
-  if(storedNames!=null)
+  if(storedNames!==null)
   {
-    WriteProducts(storedNames, CheckIfDiscountAmountFulfilled(storedNames))
+    let a = 0;
+    let FilterdNames =[]
+    let active = localStorage.getItem("ActiveCart")
+    console.log("Active Cart" + active)
+    storedNames.forEach(function(element){
+      a++;
+      if(element.Cart == active)
+      {
+        console.log(element.Cart +" Has been removed")
+        FilterdNames.push(element)
+      }
+    });
+    
+    console.log("Looped this many:" + a);
+    console.log(Array.isArray(FilterdNames))
+    console.log(typeof FilterdNames)
+    console.log("Filterd: " + FilterdNames)
+    WriteProducts(FilterdNames, CheckIfDiscountAmountFulfilled(FilterdNames))
   }
   else{
 
     document.getElementById("Products").innerHTML="Go buy some pigs!";
   }
-
+let active =localStorage.getItem("ActiveCart");
+if(active!==null)
+{
   document.getElementById("ActiveCart").innerHTML= localStorage.getItem("ActiveCart");
+}
+else{
+  
+  document.getElementById("ActiveCart").innerHTML= localStorage.setItem("ActiveCart", "No Cart");
+}
 }
 
 function SeparateTheDifferentItems(products)
@@ -176,7 +203,7 @@ function WriteProducts(products, discountedItems)
     Text +=
     "<div class=\"container float-left\">" +
       "<div class=\"row mb-1 bg-white text-light\">" + 
-        "<button type=\"button\" class=\"btn btn-primary\" onClick=\"Clear()\">Buy All items</button>" +
+        "<button type=\"button\" class=\"btn btn-primary\" onClick=\"buy()\">Buy Cart</button>" +
       "<\/div>" +
     "<\/div>";
     
@@ -184,58 +211,77 @@ function WriteProducts(products, discountedItems)
     document.getElementById("Products").innerHTML=Text;
   }
 }
-
+function buy()
+{
+ let active = localStorage.getItem("ActiveCart")
+alert("You bought " + active)
+window.location.href = '../home';
+}
 function getcart()
 {
 let carts = localStorage.getItem("carts")
 carts = JSON.parse(carts)
-carts = carts
-console.log(carts)
+if(carts)
+{
+console.log("All Carts:" +carts)
 console.log("I am array "+ Array.isArray(carts))
+console.log("type of" + typeof carts)
 let text ="";
-for (var i = 0; i < carts.Name.length; i++) {
-  console.log(i + ""+ carts.Name[i])
-  text +="<p>"+ carts.Name[i] + "<button onclick=\"ChangeActiveCart('"+carts.Name[i]+"')\"> Set to Active Cart </button></p>"
-  //Do something
-}
+
+let a = 0;
+carts.forEach(function(element){
+  console.log("forEach" + a);
+  a++;
+  text +="<p>"+ element + "<button onclick=\"ChangeActiveCart('"+element+"')\"> Set to Active Cart </button></p>"
+
+});
 
 document.getElementById("getCart").innerHTML= text;
 }
-
+}
 function ChangeActiveCart(cart)
 {
   localStorage.setItem("ActiveCart", cart)
   document.getElementById("ActiveCart").innerHTML= localStorage.getItem("ActiveCart");
+  //LoadProducts();
+  
+  window.location.href = '';
+}
+
+/*function LoadProducts()
+{
+  let carts = localStorage.getItem("carts")
+  let active = localStorage.getItem("ActiveCart")
+carts = JSON.parse(carts)
+for (var i = 0; i < carts.Products.length; i++) {
+  console.log(i + ""+ carts.Name[i])
+
+  text +="<p>"+ carts.Name[i] + "<button onclick=\"ChangeActiveCart('"+carts.Name[i]+"')\"> Set to Active Cart </button></p>"
+}
+}*/
+function savecart()
+{
+
 }
 function newcart()
 {
+let Cart =  prompt("New cart name")
 
-  let Cart = {
-    Name: prompt("New cart name"),
-    Products: localStorage.getItem("products")
-  };
    if(!store.Allcart){
 
         console.log('Creating Cart');
         store.Allcart = {
-            Name: [],
-            Products: []
+            Carts: []
     }
     
     store.save(); 
   }
-    store.Allcart.Name.push(Cart.Name);
-    store.Allcart.Products.push(Cart.Products);
+    store.Allcart.Carts.push(Cart);
     store.save(); 
 
-  localStorage.setItem("carts", JSON.stringify(store.Allcart))
-  localStorage.setItem("ActiveCart", Cart.Name)
+  localStorage.setItem("carts", JSON.stringify(store.Allcart.Carts))
+  localStorage.setItem("ActiveCart", Cart)
   //console.log("Saved")
   
   window.location.href = '';
     }
-
-function clear()
-{
-  localStorage.clear();
-}
