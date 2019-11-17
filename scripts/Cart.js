@@ -67,9 +67,16 @@ function addToCart(name, price, color, weight, discount)
 }
 function Clear()
 {
+  let cartNumber = parseInt(document.getElementById("CartNumber").innerHTML)
+  localStorage.removeItem("products");
   
-  localStorage.cart[store.cartNumber].clear();
-  localStorage.products.clear();
+  
+  store.cart[cartNumber] = {
+    products: [],
+    shipping: 100,
+    totalPrice: 0
+  };  
+  store.save();
   alert("Thank You for your purchase!")
         
         window.location.href = '';
@@ -197,10 +204,6 @@ function WriteProducts(products, discountedItems)
       
       TotalPrice -= TotalDiscount;
       TotalTax = TotalPrice/4;
-      console.log("after discount" +TotalPrice)
-      console.log("after discount" +TotalPrice)
-      console.log("Hello I am Tax:"+TotalTax)
-      console.log("minus tax: "+(Number(TotalPrice) - Number(TotalTax)));
       TotalPrice += Shipment;
     Text += 
     "<div class=\"container float-left\">" + "Summation" +
