@@ -57,9 +57,7 @@ function addToCart(name, price, color, weight, discount)
         };  
         store.save(); 
     }
-    
-    console.log(cartNumber)
-    //console.log(store.cart[parseInt(cartNumber)+2]);
+
     store.cart[cartNumber].products.push(product);
     store.save();
     
