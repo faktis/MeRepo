@@ -66,6 +66,19 @@ function addToCart(name, price, color, weight, discount)
 function Clear()
 {
   let cartNumber = parseInt(document.getElementById("CartNumber").innerHTML)
+  if(!store.orderHistory)
+  {
+    store.orderHistory = [];
+    store.orderDates = [];
+    store.save();
+    
+  }
+  let products = localStorage.getItem("products");
+  products = JSON.parse(products);
+  store.orderHistory.push(products);
+  
+  store.orderDates.push(new Date());
+  store.save();
   localStorage.removeItem("products");
   
   
@@ -118,6 +131,23 @@ function GetData()
 
     document.getElementById("Products").innerHTML="Go buy some pigs!";
   }
+  let orderHistory = "Old orders" +
+    "<ul style=\"list-style-type:none;\">" + 
+      "<div class=\"container float-left\">" +
+        "<div class=\"row\" >"
+    
+  if(store.orderHistory)
+  {
+    store.orderHistory.reverse().forEach(function(element,i){
+      orderHistory+= "<li class=\"card col-12\">" +
+      "<div class=\"card-body\">"
+      orderHistory +="<h3>" + store.orderDates[store.orderDates.length - i-1] + "<\/h3>";
+      orderHistory += WriteOrderHistory(element, CheckIfDiscountAmountFulfilled(element))
+      orderHistory += "<\/div><\/li>"
+    });
+    orderHistory += "<\/div><\/div><\/div><\/ul>"
+    document.getElementById("OrderHistory").innerHTML=orderHistory;
+  }
 }
 
 function SeparateTheDifferentItems(products)
@@ -156,7 +186,69 @@ function CheckIfDiscountAmountFulfilled(products)
   return discountedItems;
 }
 
+function WriteOrderHistory(products, discountedItems)
+{
+  if(products!=null)
+  {
+    let Text="";
+    let TotalPrice = 0;
+    let TotalTax = 0;
+    let Shipment = 1000;
+    let TotalDiscount = 0;
+    let differentItems = SeparateTheDifferentItems(products);
+   
+    differentItems.forEach(function(element){
+      Text += 
+      "<div class=\"container float-left\">" + 
+        "<div class=\"row mb-1 bg-dark text-light\">" + 
+          "<div class=\"col-sm-4 col-xs-1 col-md-3\">Name: " + element[0].Name + "<\/div>" + 
+          "<div class=\"col-sm-3 col-xs-1 col-md-3\">Price Per Product: " + element[0].Price + "£<\/div>" + 
+          "<div class=\"col-sm-2 col-xs-1 col-md-2\"> Amount: " + element.length + "<\/div>" + 
+          "<div class=\"col-sm-3 col-xs-1 col-md-3\"> Sum added to total: " + element.length * element[0].Price + "£<\/div>" +
+        "<\/div>" + 
+      "<\/div>";
+      TotalPrice += (Number(element[0].Price)*element.length)
+    })
+    console.log(TotalPrice)
+    let RemovedFromTotalPrice = SeparateTheDifferentItems(discountedItems);
 
+    RemovedFromTotalPrice.forEach(function(element){
+      TotalDiscount += Number(element[0].Price)*element.length;
+      Text +=  
+      "<div class=\"container float-left\">" + "Discounted wares" +
+        "<div class=\"row mb-1 bg-danger text-light\">" + 
+          "<div class=\"col-sm-4 col-xs-1 col-md-3\">Name: " + element[0].Name + "<\/div>" + 
+          "<div class=\"col-sm-3 col-xs-1 col-md-3\">Price Per Product: " + element[0].Price + "£<\/div>" + 
+          "<div class=\"col-sm-2 col-xs-1 col-md-2\"> Amount: " + element.length + "<\/div>" + 
+          "<div class=\"col-sm-3 col-xs-1 col-md-3\"> Sum removed from total: " + element.length * element[0].Price + "£<\/div>" +
+        "<\/div>" + 
+      "<\/div>";
+    })
+    if(TotalPrice>6000)
+      {
+        Shipment = 0;
+      }
+      
+      TotalPrice -= TotalDiscount;
+      TotalTax = TotalPrice/4;
+      TotalPrice += Shipment;
+    Text += 
+    "<div class=\"container float-left\">" + "Summation" +
+      "<div class=\"row mb-1 bg-info text-light\">" + 
+      "<div class=\"col-sm-4 col-xs-1 col-md-3\">Products: " +((Number(TotalPrice)- Number(TotalTax)) + Number(TotalDiscount) - Number(Shipment)) + "£<\/div>" +
+      "<div class=\"col-sm-4 col-xs-1 col-md-3\">Discount: " +TotalDiscount + "£<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-2\">Tax: " +TotalTax + "£<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Shipping: " +Shipment + "£<\/div>" +
+        "<div class=\"col-sm-4 col-xs-1 col-md-3\">Total: " +TotalPrice + "£<\/div>" +
+      "<\/div>" + 
+    "<\/div>";
+    
+    
+    console.log(TotalTax);
+    return Text;
+    //document.getElementById("OrderHistory").innerHTML=Text;
+  }
+}
 function WriteProducts(products, discountedItems)
 {
   if(products!=null)
